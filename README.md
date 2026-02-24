@@ -115,9 +115,19 @@ Email: albert0325162@gmail.com
 
 * For technical questions about the code or analyses, please open a [GitHub Issue](https://github.com/albert0325/HEV_hIO_scRNAseq/issues).  
 * For journal-related correspondence, please contact the corresponding author via the journal.  
-* For general questions or collaboration inquiries related to the lab:  
+* For general questions or collaboration inquiries related to the labs:
+
+  [Dao Thi Lab](https://daothilab.com/)
+
+  **Dr. Viet Loan Dao Thi**
+
+  Email: VietLoan.DaoThi@med.uni-heidelberg.de
+
+
   [Computational Regulatory Omics Lab](https://www.hdsu.org/)  
-  **Prof. Dr. Carl Herrmann**  
+
+  **Prof. Dr. Carl Herrmann**
+    
   Email: carl.herrmann@bioquant.uni-heidelberg.de
 
 
