@@ -71,8 +71,8 @@ remotes::install_github("mojaveazure/seurat-disk")
 
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/CROmLab/HEV-intestinal-organoids-scRNAseq.git
-   cd HEV-intestinal-organoids-scRNAseq
+   git clone https://github.com/albert0325/HEV_hIO_scRNAseq.git
+   cd HEV_hIO_scRNAseq
    ```
 
 2. **Download the data**  
@@ -123,8 +123,10 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## Contact
 
-**Computational Regulatory Omics Lab (CROmLab)**  
-Institute for Pharmacy and Molecular Biotechnology, Heidelberg University & BioQuant  
-Heidelberg, Germany  
+Albert Li (李律)  
+Institute for Pharmacy and Molecular Biotechnology (IPMB) & BioQuant, Heidelberg University, Germany
 
-For questions related to the bioinformatic analysis, please open a [GitHub Issue](../../issues) or contact the corresponding author via the journal.
+Email: albert0325162@gmail.com  
+
+For technical questions, please open a GitHub Issue.  
+For journal-related correspondence, please contact the corresponding author via the journal.
