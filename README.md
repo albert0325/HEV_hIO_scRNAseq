@@ -13,7 +13,6 @@ This repository contains all bioinformatic analysis code accompanying the manusc
 
 > **Hepatitis E virus replication is maintained in proliferative cells within the intestinal crypt**  
 > *Science Advances* (2026)  
-> Computational Regulatory Omics Lab (CROmLab) — Institute for Pharmacy and Molecular Biotechnology, Heidelberg University & BioQuant, Heidelberg, Germany
 
 The study demonstrates that HEV predominantly infects proliferative transit-amplifying (TA) cells and intestinal stem cells (ISCs) within the crypts of human pluripotent stem cell-derived intestinal organoids (hIOs), using single-cell RNA sequencing (scRNA-seq), stemness scoring, and pseudotime trajectory analysis.
 
@@ -127,7 +126,7 @@ Email: albert0325162@gmail.com
   [Computational Regulatory Omics Lab](https://www.hdsu.org/)  
 
   **Prof. Dr. Carl Herrmann**
-    
+
   Email: carl.herrmann@bioquant.uni-heidelberg.de
 
 
