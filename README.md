@@ -47,23 +47,7 @@ R ≥ 4.3.0 is recommended.
 | [patchwork](https://patchwork.data-imaginist.com/) | ≥ 1.2 | Figure panel composition |
 | [SeuratDisk](https://github.com/mojaveazure/seurat-disk) | ≥ 0.0.0.9021 | h5Seurat / h5ad I/O |
 
-### Installation
 
-```r
-# CRAN packages
-install.packages(c("Seurat", "tidyverse", "patchwork", "remotes"))
-
-# Bioconductor packages
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install(c("SingleR", "UCell", "celldex"))
-
-# Monocle3 (GitHub)
-remotes::install_github("cole-trapnell-lab/monocle3")
-
-# SeuratDisk (GitHub)
-remotes::install_github("mojaveazure/seurat-disk")
-```
 
 ---
 
@@ -125,8 +109,15 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 Albert Li (李律)  
 Institute for Pharmacy and Molecular Biotechnology (IPMB) & BioQuant, Heidelberg University, Germany
+  
 
 Email: albert0325162@gmail.com  
 
-For technical questions, please open a GitHub Issue.  
-For journal-related correspondence, please contact the corresponding author via the journal.
+* For technical questions about the code or analyses, please open a [GitHub Issue](https://github.com/albert0325/HEV_hIO_scRNAseq/issues).  
+* For journal-related correspondence, please contact the corresponding author via the journal.  
+* For general questions or collaboration inquiries related to the lab:  
+  [Computational Regulatory Omics Lab](https://www.hdsu.org/)  
+  **Prof. Dr. Carl Herrmann**  
+  Email: carl.herrmann@bioquant.uni-heidelberg.de
+
+
