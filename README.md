@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GEO](https://img.shields.io/badge/GEO-GSE303209-blue.svg)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE303209)
 [![Journal](https://img.shields.io/badge/Journal-Science%20Advances-red.svg)](https://www.science.org/journal/sciadv)
-[![R](https://img.shields.io/badge/R-%3E%3D4.3-276DC3.svg)](https://www.r-project.org/)
+[![R](https://img.shields.io/badge/R-4.5.2-276DC3.svg)](https://www.r-project.org/)
 
 ---
 
