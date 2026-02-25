@@ -32,20 +32,55 @@ The `data/` folder in this repository does **not** track large data files. Pleas
 ## Requirements
 
 ### R version
-R ≥ 4.3.0 is recommended.
+
+Analyses were performed under **R 4.5.2** (2025-10-31) on macOS Sequoia 15.7.4
+(x86\_64-apple-darwin20). The full `sessionInfo()` output is provided at the
+bottom of this README for complete reproducibility.
 
 ### Core packages
 
-| Package | Version tested | Purpose |
-|---|---|---|
-| [Seurat](https://satijalab.org/seurat/) | ≥ 5.0 | scRNA-seq processing, clustering, UMAP |
-| [Monocle3](https://cole-trapnell-lab.github.io/monocle3/) | ≥ 1.3 | Pseudotime trajectory analysis |
-| [SingleR](https://bioconductor.org/packages/SingleR/) | ≥ 2.4 | Automated cell type annotation |
-| [UCell](https://bioconductor.org/packages/UCell/) | ≥ 2.6 | Stemness scoring |
-| [tidyverse](https://www.tidyverse.org/) | ≥ 2.0 | Data wrangling and ggplot2 visualisation |
-| [patchwork](https://patchwork.data-imaginist.com/) | ≥ 1.2 | Figure panel composition |
-| [SeuratDisk](https://github.com/mojaveazure/seurat-disk) | ≥ 0.0.0.9021 | h5Seurat / h5ad I/O |
+| Package | Tested version | Source | Purpose |
+|---|---|---|---|
+| [Seurat](https://satijalab.org/seurat/) | 5.4.0 | CRAN | scRNA-seq processing, SCTransform integration, UMAP |
+| [SeuratObject](https://satijalab.org/seurat/) | 5.3.0 | CRAN | Seurat S4 class infrastructure |
+| [SingleR](https://bioconductor.org/packages/SingleR/) | 2.12.0 | Bioconductor | Reference-based cell type annotation |
+| [SummarizedExperiment](https://bioconductor.org/packages/SummarizedExperiment/) | 1.40.0 | Bioconductor | Reference matrix container for SingleR |
+| [CytoTRACE2](https://cytotrace.stanford.edu/) | 1.1.0 | GitHub | Developmental potency scoring |
+| [monocle3](https://cole-trapnell-lab.github.io/monocle3/) | 1.4.26 | GitHub | Pseudotime trajectory inference |
+| [ComplexHeatmap](https://bioconductor.org/packages/ComplexHeatmap/) | 2.26.1 | Bioconductor | SingleR score heatmap |
+| [circlize](https://jokergoo.github.io/circlize_book/) | 0.4.17 | CRAN | Colour scale for ComplexHeatmap |
+| [ggpubr](https://rpkgs.datanovia.com/ggpubr/) | 0.6.2 | CRAN | Statistical annotation on plots |
+| [rstatix](https://rpkgs.datanovia.com/rstatix/) | 0.7.3 | CRAN | Wilcoxon tests within dplyr pipelines |
+| [tidyverse](https://www.tidyverse.org/) | 2.0.0 | CRAN | Data wrangling and ggplot2 |
+| [ggplot2](https://ggplot2.tidyverse.org/) | 4.0.2 | CRAN | Core plotting |
+| [readxl](https://readxl.tidyverse.org/) | 1.4.5 | CRAN | Reading marker gene Excel file |
+| [patchwork](https://patchwork.data-imaginist.com/) | 1.3.2 | CRAN | Figure panel composition |
+| [RColorBrewer](https://CRAN.R-project.org/package=RColorBrewer) | 1.1-3 | CRAN | Colour palettes |
+| [future](https://future.futureverse.org/) | 1.69.0 | CRAN | Parallelisation for SCTransform |
+| [viridisLite](https://sjmgarnier.github.io/viridisLite/) | 0.4.3 | CRAN | Viridis colour scales |
 
+### Installation
+
+```r
+# CRAN packages
+install.packages(c(
+  "Seurat", "tidyverse", "ggplot2", "patchwork",
+  "ggpubr", "rstatix", "readxl", "circlize",
+  "RColorBrewer", "future", "viridisLite", "remotes"
+))
+
+# Bioconductor packages
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c(
+  "SingleR", "SummarizedExperiment",
+  "ComplexHeatmap", "BiocParallel"
+))
+
+# GitHub packages
+remotes::install_github("cole-trapnell-lab/monocle3")
+remotes::install_github("digitalcytometry/cytotrace2", subdir = "cytotrace2")
+```
 
 
 ---
@@ -59,32 +94,17 @@ R ≥ 4.3.0 is recommended.
    ```
 
 2. **Download the data**  
-   Follow the instructions in [`data/README_data.md`](data/README_data.md) to download the count matrices from GEO accession [GSE303209](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE303209) and place them in the `data/` directory.
+   Download the count matrices from GEO accession [GSE303209](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE303209) and place them in the `data/` directory.
 
-3. **Run the scripts in order**  
-   Scripts are numbered and should be run sequentially:
+3. **Run scripts in order from an R session opened at the repository root**
+   ```r
+   source("R/01_quality_control.R")    # produces: hev object, outputs/S9A.tiff
+   source("R/02_annotation.R")         # produces: fig3A–D, S9B–C
+   source("R/03_stemness_pseudotime.R")# produces: S11A–C
+   source("R/04_ISG_response.R")       # produces: boxplot_sig_schoggins.pdf
    ```
-   Fig3_01_quality_control.R
-   Fig3_02_annotation.R
-   Fig3_03_stemness_pseudotime.R
-   Fig3_04_HEV_tropism.R
-   Fig3_05_ISG_response.R
-   ```
-   Each script saves intermediate `.rds` objects that are loaded by the next script, so the order matters.
-
-4. **Outputs**  
-   Figures and tables are written to an `output/` directory that is created automatically on the first run.
-
----
-
-## Key Findings Recapitulated by This Code
-
-- **17,902 single cells** passing QC from HEVcc-infected hIOs at 14 days post-infection
-- Cell type annotation into ISCs, TA cells, enterocytes, goblet, enteroendocrine, and Paneth cells
-- **500 HEV RNA-positive cells** (2.78% infection rate), enriched in TA cells and ISCs
-- Stemness scoring confirming higher stemness in TA/ISC populations
-- Pseudotime trajectory recapitulating ISC → TA → differentiated lineage hierarchy
-- ISG upregulation restricted to HEV-infected enterocytes
+   Each script sources `R/utils.R` and writes all figures to `outputs/`
+   (created automatically if absent).
 
 ---
 
@@ -106,27 +126,37 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## Contact
 
-Albert Li (李律)  
-Institute for Pharmacy and Molecular Biotechnology (IPMB) & BioQuant, Heidelberg University, Germany
-  
+**Albert Li (李律)**  
+Institute for Pharmacy and Molecular Biotechnology (IPMB)  
+BioQuant, Heidelberg University, Germany  
 
-Email: albert0325162@gmail.com  
+📧  albert0325162@gmail.com  
 
-* For technical questions about the code or analyses, please open a [GitHub Issue](https://github.com/albert0325/HEV_hIO_scRNAseq/issues).  
-* For journal-related correspondence, please contact the corresponding author via the journal.  
-* For general questions or collaboration inquiries related to the labs:
+---
 
-  [Dao Thi Lab](https://daothilab.com/)
+### Code & Data
 
-  **Dr. Viet Loan Dao Thi**
+For technical questions about the code or analyses, please open a GitHub Issue:  
+https://github.com/albert0325/HEV_hIO_scRNAseq/issues  
 
-  Email: VietLoan.DaoThi@med.uni-heidelberg.de
+---
 
+### Journal Correspondence
 
-  [Computational Regulatory Omics Lab](https://www.hdsu.org/)  
+For journal-related matters, please contact the corresponding author via the journal.
 
-  **Prof. Dr. Carl Herrmann**
+---
 
-  Email: carl.herrmann@bioquant.uni-heidelberg.de
+### Laboratory Contacts
+
+**Dao Thi Lab**  
+Dr. Viet Loan Dao Thi  
+📧 VietLoan.DaoThi@med.uni-heidelberg.de  
+🌐 https://daothilab.com/
+
+**Computational Regulatory Omics Lab**  
+Prof. Dr. Carl Herrmann  
+📧 carl.herrmann@bioquant.uni-heidelberg.de  
+🌐 https://www.hdsu.org/
 
 
