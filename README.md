@@ -25,7 +25,7 @@ Raw and processed scRNA-seq data are publicly available on NCBI Gene Expression 
 
 **Accession: [GSE303209](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE303209)**
 
-The `data/` folder in this repository does **not** track large data files. Please see [`data/README_data.md`](data/README_data.md) for detailed instructions on downloading and organising the data locally to reproduce all analyses.
+The `data/` folder in this repository does **not** track large data files. Please download and organising the data locally to reproduce all analyses.
 
 ---
 
@@ -34,8 +34,7 @@ The `data/` folder in this repository does **not** track large data files. Pleas
 ### R version
 
 Analyses were performed under **R 4.5.2** (2025-10-31) on macOS Sequoia 15.7.4
-(x86\_64-apple-darwin20). The full `sessionInfo()` output is provided at the
-bottom of this README for complete reproducibility.
+(x86\_64-apple-darwin20).
 
 ### Core packages
 
@@ -131,7 +130,7 @@ Institute for Pharmacy and Molecular Biotechnology (IPMB)
 BioQuant, Heidelberg University, Germany  
 
 📧  albert0325162@gmail.com  
-
+🌐 https://albert0325.github.io/
 ---
 
 ### Code & Data
