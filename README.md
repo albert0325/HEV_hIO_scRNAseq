@@ -100,7 +100,7 @@ remotes::install_github("digitalcytometry/cytotrace2", subdir = "cytotrace2")
    source("R/01_quality_control.R")    # produces: hev object, outputs/S9A.tiff
    source("R/02_annotation.R")         # produces: fig3A–D, S9B–C
    source("R/03_stemness_pseudotime.R")# produces: S11A–C
-   source("R/04_ISG_response.R")       # produces: boxplot_sig_schoggins.pdf
+   source("R/04_ISG_response.R")       # produces: fig3E
    ```
    Each script sources `R/utils.R` and writes all figures to `outputs/`
    (created automatically if absent).
