@@ -9,12 +9,10 @@
 
 ## Overview
 
-This repository contains all bioinformatic analysis code accompanying the manuscript:
+This repository contains scripts accompanying the manuscript:
 
 > **Hepatitis E virus replication is maintained in proliferative cells within the intestinal crypt**  
-> *Science Advances* (2026)  
-
-The study demonstrates that HEV predominantly infects proliferative transit-amplifying (TA) cells and intestinal stem cells (ISCs) within the crypts of human pluripotent stem cell-derived intestinal organoids (hIOs), using single-cell RNA sequencing (scRNA-seq), stemness scoring, and pseudotime trajectory analysis.
+> Prallet et al., Sci. Adv. 12, eaeb2333 (2026)   
 
 ---
 
@@ -58,61 +56,15 @@ Analyses were performed under **R 4.5.2** (2025-10-31) on macOS Sequoia 15.7.4
 | [future](https://future.futureverse.org/) | 1.69.0 | CRAN | Parallelisation for SCTransform |
 | [viridisLite](https://sjmgarnier.github.io/viridisLite/) | 0.4.3 | CRAN | Viridis colour scales |
 
-### Installation
-
-```r
-# CRAN packages
-install.packages(c(
-  "Seurat", "tidyverse", "ggplot2", "patchwork",
-  "ggpubr", "rstatix", "readxl", "circlize",
-  "RColorBrewer", "future", "viridisLite", "remotes"
-))
-
-# Bioconductor packages
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install(c(
-  "SingleR", "SummarizedExperiment",
-  "ComplexHeatmap", "BiocParallel"
-))
-
-# GitHub packages
-remotes::install_github("cole-trapnell-lab/monocle3")
-remotes::install_github("digitalcytometry/cytotrace2", subdir = "cytotrace2")
-```
-
-
 ---
-
-## Reproducing the Analysis
-
-1. **Clone this repository**
-   ```bash
-   git clone https://github.com/albert0325/HEV_hIO_scRNAseq.git
-   cd HEV_hIO_scRNAseq
-   ```
-
-2. **Download the data**  
-   Download the count matrices from GEO accession [GSE303209](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE303209) and place them in the `data/` directory.
-
-3. **Run scripts in order from an R session opened at the repository root**
-   ```r
-   source("R/01_quality_control.R")    # produces: hev object, outputs/S9A.tiff
-   source("R/02_annotation.R")         # produces: fig3A–D, S9B–C
-   source("R/03_stemness_pseudotime.R")# produces: S11A–C
-   source("R/04_ISG_response.R")       # produces: fig3E
-   ```
-   Each script sources `R/utils.R` and writes all figures to `outputs/`
-   (created automatically if absent).
-
----
-
 ## Citation
 
 If you use this code or data, please cite:
 
 ```
-[Citation to be added upon publication — DOI will be inserted here]
+[Hepatitis E virus replication is maintained inproliferative cells within the intestinal crypt. Prallet et al., Sci. Adv. 12, eaeb2333 (2026)
+(https://doi.org/10.1126/sciadv.aeb2333)]
+
 ```
 
 ---
@@ -121,41 +73,6 @@ If you use this code or data, please cite:
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
----
 
-## Contact
-
-**Albert Li (李律)**  
-Institute for Pharmacy and Molecular Biotechnology (IPMB)  
-BioQuant, Heidelberg University, Germany  
-
-📧  albert0325162@gmail.com  
-🌐 https://albert0325.github.io/
----
-
-### Code & Data
-
-For technical questions about the code or analyses, please open a GitHub Issue:  
-https://github.com/albert0325/HEV_hIO_scRNAseq/issues  
-
----
-
-### Journal Correspondence
-
-For journal-related matters, please contact the corresponding author via the journal.
-
----
-
-### Laboratory Contacts
-
-**Dao Thi Lab**  
-Dr. Viet Loan Dao Thi  
-📧 VietLoan.DaoThi@med.uni-heidelberg.de  
-🌐 https://daothilab.com/
-
-**Computational Regulatory Omics Lab**  
-Prof. Dr. Carl Herrmann  
-📧 carl.herrmann@bioquant.uni-heidelberg.de  
-🌐 https://www.hdsu.org/
 
 
