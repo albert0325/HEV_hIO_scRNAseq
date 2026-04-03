@@ -62,8 +62,9 @@ Analyses were performed under **R 4.5.2** (2025-10-31) on macOS Sequoia 15.7.4
 If you use this code or data, please cite:
 
 ```
-[Hepatitis E virus replication is maintained inproliferative cells within the intestinal crypt. Prallet et al., Sci. Adv. 12, eaeb2333 (2026)
-(https://doi.org/10.1126/sciadv.aeb2333)]
+Hepatitis E virus replication is maintained inproliferative cells within the intestinal crypt. 
+Prallet et al., Sci. Adv. 12, eaeb2333 (2026)
+(https://doi.org/10.1126/sciadv.aeb2333)
 
 ```
 
