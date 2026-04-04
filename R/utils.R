@@ -1,10 +1,5 @@
 # =============================================================================
 # utils.R
-# Shared colour palettes and helper functions
-#
-# Source this file at the top of each analysis script:
-#   source("R/utils.R")
-#
 # =============================================================================
 
 library(ggplot2)
@@ -14,7 +9,6 @@ library(rstatix)
 
 # -----------------------------------------------------------------------------
 # Colour palettes
-# Cell type colours are consistent across all figures.
 # -----------------------------------------------------------------------------
 
 custom_colors <- c(
@@ -28,20 +22,6 @@ custom_colors <- c(
 
 # -----------------------------------------------------------------------------
 # plot_signature_score()
-#
-# Generates a boxplot comparing a gene signature score across cell types
-# and treatment conditions, with Wilcoxon rank-sum statistics relative to mock.
-#
-# Arguments:
-#   seurat_obj      : Seurat object containing metadata columns below.
-#   score_colname   : Column name in seurat_obj@meta.data holding the score.
-#   score_label     : Human-readable label for the y-axis and plot title.
-#   celltype_colname: Column name for cell type labels (default: "SingleR_label").
-#   out_dir         : Output directory path for saving the PDF.
-#
-# Returns:
-#   A named list: list(overlay_plot = p2), where p2 is the ggplot object.
-#   Returns NULL for overlay_plot when only one treatment is present.
 # -----------------------------------------------------------------------------
 
 plot_signature_score <- function(seurat_obj,

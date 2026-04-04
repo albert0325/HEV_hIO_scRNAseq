@@ -1,22 +1,5 @@
 # =============================================================================
 # 02_annotation.R
-# Cell type annotation using a custom SingleR reference built from
-# curated intestinal marker genes, followed by UMAP visualisation
-# and HEV infection rate quantification per cell type.
-#
-# The marker gene table (Suppl. Table S1) is provided as an Excel file
-# in the data/ directory. SingleR scores are visualised as a heatmap
-# to allow inspection of annotation confidence.
-#
-# Input:  hev              — Seurat object from 01_quality_control.R
-#         data/hIOs_marker_v3_singleR.xlsx
-# Output: outputs/fig3A.tiff  — Dot plot of marker gene expression
-#         outputs/fig3B.tiff  — UMAP coloured by cell type
-#         outputs/fig3C.tiff  — UMAP coloured by infection status
-#         outputs/fig3D.tiff  — Infection rate per cell type (bar chart)
-#         outputs/S9B.tiff    — Violin plots of QC metrics by cell type
-#         outputs/S9C.tiff    — SingleR score heatmap
-#
 # =============================================================================
 
 source("R/utils.R")
@@ -35,9 +18,6 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # -----------------------------------------------------------------------------
 # Step 1: Build a custom pseudo-bulk reference from curated marker genes
-# Each cell type is represented as a binary vector (1 = marker, 0 = absent).
-# This encodes the domain knowledge in Suppl. Table S1 into a format
-# compatible with SingleR's reference-based classification.
 # -----------------------------------------------------------------------------
 
 marker_df   <- read_excel("data/hIOs_marker_v3_singleR.xlsx")
@@ -54,8 +34,6 @@ ref_se <- SummarizedExperiment(
 
 # -----------------------------------------------------------------------------
 # Step 2: Run SingleR annotation
-# SCT-normalised expression is used as the query; classification is
-# performed against the custom intestinal reference built above.
 # -----------------------------------------------------------------------------
 
 query_expr      <- GetAssayData(hev, layer = "data", assay = "SCT")
@@ -71,8 +49,6 @@ colors            <- custom_colors[intersect(names(custom_colors), all_celltypes
 
 # -----------------------------------------------------------------------------
 # Step 3: SingleR score heatmap (Suppl. Fig. S9C)
-# Scores are scaled across cell types to highlight relative confidence.
-# Cells are split by their pruned label to reveal classification clarity.
 # -----------------------------------------------------------------------------
 
 scores_mat_t <- t(scale(singleR_results$scores))
@@ -110,9 +86,6 @@ dev.off()
 
 # -----------------------------------------------------------------------------
 # Step 4: Marker gene dot plot (Fig. 3A)
-# Genes are ordered to mirror the cell type groupings in Suppl. Table S1.
-# scale = FALSE preserves raw average expression values on the colour axis,
-# making cross-cell-type comparisons interpretable.
 # -----------------------------------------------------------------------------
 
 genes_of_interest <- unique(c(
@@ -157,9 +130,6 @@ ggsave(file.path(out_dir, "fig3A.tiff"), plot = p, device = "tiff",
 
 # -----------------------------------------------------------------------------
 # Step 5: QC violin plots by cell type (Suppl. Fig. S9B)
-# Plotting post-annotation confirms that QC metric distributions are
-# comparable across annotated cell types, ruling out annotation bias
-# driven by residual low-quality cells.
 # -----------------------------------------------------------------------------
 
 p <- VlnPlot(hev, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"),
@@ -194,8 +164,6 @@ ggsave(file.path(out_dir, "fig3C.tiff"), plot = p, device = "tiff",
 
 # -----------------------------------------------------------------------------
 # Step 8: HEV infection rate per cell type (Fig. 3D)
-# Proportions are computed from all cells (infected + uninfected) to avoid
-# ascertainment bias. Labels show both percentage and absolute counts.
 # -----------------------------------------------------------------------------
 
 infection_rate <- hev@meta.data %>%

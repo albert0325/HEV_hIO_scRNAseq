@@ -1,18 +1,5 @@
 # =============================================================================
 # 01_quality_control.R
-# scRNA-seq quality control, sample integration, and dimensionality reduction
-#
-# Two 10x Genomics libraries are loaded and integrated via SCTransform:
-#   - HEV_norm : cells exposed to HEV under standard conditions (a.k.a. HEV-1 in the paper)
-#   - HEV_pp   : cells exposed to HEV under alternative passage conditions (a.k.a. HEV-2 in the paper)
-#
-# Infected cells are flagged by detectable ORF1 or ORF2 viral transcripts.
-#
-# Input:  data/HEV_norm/filtered_feature_bc_matrix/
-#         data/HEV_pp/filtered_feature_bc_matrix/
-# Output: outputs/S9A.tiff   — QC metrics projected onto UMAP
-#         hev                — Seurat object carried forward to 02_annotation.R
-#
 # =============================================================================
 
 source("R/utils.R")
@@ -37,9 +24,6 @@ hev <- merge(dat1, y = dat2, add.cell.ids = c("norm", "pp"), project = "HEV")
 
 # -----------------------------------------------------------------------------
 # Step 2: Quality control
-# Thresholds chosen by inspection of per-sample distributions.
-# nFeature_RNA < 9,000 and nCount_RNA < 100,000 remove likely doublets.
-# percent.mt  < 50.
 # -----------------------------------------------------------------------------
 
 hev[["percent.mt"]] <- PercentageFeatureSet(hev, pattern = "^MT-")
@@ -56,8 +40,6 @@ cat(sprintf("Cells retained after QC: %d\n", ncol(hev)))
 
 # -----------------------------------------------------------------------------
 # Step 3: Flag HEV-infected cells
-# A cell is called infected if it carries ≥1 UMI from ORF1 or ORF2,
-# the two principal HEV open reading frames present in the custom genome index.
 # -----------------------------------------------------------------------------
 
 inf.counts      <- FetchData(hev, vars = c("ORF1", "ORF2"), layer = "counts")
@@ -71,8 +53,6 @@ hev$infected_status <- ifelse(hev$infected, "Positive", "Negative")
 
 # -----------------------------------------------------------------------------
 # Step 4: Integration via SCTransform
-# Each library is normalised independently with SCTransform before
-# anchor-based integration to remove batch effects between conditions.
 # -----------------------------------------------------------------------------
 
 options(future.globals.maxSize = Inf)
@@ -100,8 +80,6 @@ hev <- FindClusters(hev, resolution = 0.8)
 
 # -----------------------------------------------------------------------------
 # Step 6: Visualise QC metrics on UMAP embedding (Suppl. Fig. S9A)
-# Projecting QC metrics onto the UMAP confirms that low-quality cells
-# do not form spatially coherent clusters post-filtering.
 # -----------------------------------------------------------------------------
 
 p <- FeaturePlot(

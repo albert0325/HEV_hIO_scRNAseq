@@ -1,18 +1,5 @@
 # =============================================================================
 # 03_stemness_pseudotime.R
-# Developmental potency scoring with CytoTRACE2 and pseudotime trajectory
-# inference with Monocle3.
-#
-# CytoTRACE2 estimates each cell's differentiation status from transcriptional
-# diversity; higher scores indicate greater stemness / developmental potency.
-# Pseudotime is computed independently per library (hev, hevpp) using their
-# respective UMAP embeddings, then merged back into the joint Seurat object.
-# Root cells are defined as the top-10 stem cells ranked by CytoTRACE2 score.
-#
-# Input:  hev              — Seurat object from 02_annotation.R
-# Output: outputs/S11A.tiff — UMAP coloured by CytoTRACE2 score
-#         outputs/S11B.tiff — UMAP coloured by CytoTRACE2 potency category
-#         outputs/S11C.tiff — UMAP coloured by Monocle3 pseudotime
 # =============================================================================
 
 source("R/utils.R")
@@ -27,8 +14,6 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # -----------------------------------------------------------------------------
 # Step 1: CytoTRACE2 stemness scoring
-# SCT counts are used as input; CytoTRACE2 is run in gene-expression matrix
-# mode (is_seurat = FALSE) to ensure compatibility with the SCT assay layer.
 # -----------------------------------------------------------------------------
 
 Idents(hev) <- "SingleR_label"
@@ -57,12 +42,6 @@ ggsave(file.path(out_dir, "S11B.tiff"), plot = p2, device = "tiff",
 
 # -----------------------------------------------------------------------------
 # Step 2: Monocle3 pseudotime trajectory
-#
-# Pseudotime is computed separately for each library to avoid cross-condition
-# trajectory distortions. UMAP coordinates are transferred from the integrated
-# Seurat object so that trajectories are anchored to the same embedding.
-# Root cells: top 10 stem cells by CytoTRACE2 score, providing a biologically
-# grounded and data-driven starting point for the trajectory.
 # -----------------------------------------------------------------------------
 
 run_pseudotime <- function(seurat_obj, counts_layer) {
