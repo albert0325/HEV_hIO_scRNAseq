@@ -58,7 +58,6 @@ plot_signature_score <- function(seurat_obj,
 
   if (n_treatments > 1) {
 
-    # Assign colours: grey for mock, then colorblind-friendly palette
     if (n_treatments == 2) {
       treatment_colors <- c("grey", "#E69F00")
     } else if (n_treatments == 3) {
@@ -69,7 +68,6 @@ plot_signature_score <- function(seurat_obj,
     }
     names(treatment_colors) <- ordered_treatments
 
-    # Wilcoxon rank-sum test vs. mock, Bonferroni-adjusted
     stat_test <- plot_data %>%
       group_by(celltype) %>%
       wilcox_test(signature_score ~ treatments, ref.group = "mock", alternative = "less") %>%
